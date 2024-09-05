@@ -1,0 +1,81 @@
+<!-- recipe-form.component.html -->
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="form-group col-sm-8 mb-2">
+            <label for="name">Nome</label>
+            <input id="name" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="time">Tempo de preparo (min)</label>
+            <input id="time" formControlName="time" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="form-group col-sm-12 mb-2">
+            <label for="descriptions">Descrição</label>
+            <input id="descriptions" formControlName="descriptions" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6 mb-2">
+            <label for="image">Image URL</label>
+            <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" accept="image/*">
+        </div>
+    </div>
+
+
+
+
+    <div formArrayName="method" class="mb-2">
+        <button type="button" class="btn btn-info mb-2" (click)="addMethod()">Adicionar Etapa</button>
+        <div *ngFor="let step of method.controls; let i = index" [formGroupName]="i">
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <label for="stepNumber">Número da etapa</label>
+                    <input id="stepNumber" formControlName="stepNumber" class="form-control text-center" />
+                </div>
+                <div class="form-group col-sm-8">
+                    <label for="stepDescription">Descrição da etapa</label>
+                    <input id="stepDescription" formControlName="stepDescription" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2 mt-4">
+                    <button type="button" class="btn btn-danger" (click)="removeMethod(i)">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div formArrayName="ingredients">
+        <button type="button" class="btn btn-primary mb-2" (click)="addIngredient()">Adicionar Ingrediente</button>
+        <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label for="ingredient">Ingrediente</label>
+                    <input id="ingredient" formControlName="ingredient" class="form-control"
+                        [ngbTypeahead]="searchIngredients" [inputFormatter]="formatIngredientInput"
+                        [resultFormatter]="formatIngredientResult" [selectOnExact]="true" />
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="compatibility">Compatibilidade</label>
+                    <input id="compatibility" formControlName="compatibility" class="form-control" />
+                </div>
+
+                <div class="form-group col-sm-2">
+                    <label for="quantity">Quantidade</label>
+                    <input id="quantity" formControlName="quantity" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="unity">Unidade</label>
+                    <input id="unity" formControlName="unity" class="form-control" />
+                </div>
+                <div class="form-group col-sm-2 mt-4">
+                    <button type="button" class="btn btn-danger" (click)="removeIngredient(i)">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-success float-end">Salvar Receita</button>
+</form>

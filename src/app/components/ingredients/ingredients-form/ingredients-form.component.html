@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="form-group col-sm-12 mb-3" [formGroup]="ingredientForm">
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" formControlName="name" class="form-control"
+            [ngClass]="{'is-invalid': ingredientForm.controls['name'].invalid && ingredientForm.controls['name'].dirty}">
+        <div *ngIf="ingredientForm.controls['name'].invalid && (ingredientForm.controls['name'].dirty || ingredientForm.controls['name'].touched)"
+            class="invalid-feedback">
+            <div *ngIf="ingredientForm.controls['name'].errors?.['required']">Informe um nome</div>
+        </div>
+    </div>
+</div>

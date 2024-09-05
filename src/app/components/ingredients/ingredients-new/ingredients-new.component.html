@@ -1,0 +1,12 @@
+<form [formGroup]="ingredientForm" (submit)="submit()">
+    <modal (onHide)="hideModal($event)">
+        <h5 modal-title>Novo Ingrediente</h5>
+        <div modal-body>
+            <app-ingredients-form [ingredientForm]="ingredientForm"></app-ingredients-form>
+        </div>
+        <div modal-footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!ingredientForm.valid">Salvar</button>
+        </div>
+    </modal>
+</form>

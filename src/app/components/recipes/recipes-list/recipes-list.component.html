@@ -1,0 +1,76 @@
+<div class="d-flex">
+    <div class="p-1 flex-grow-1">
+        <h3>Receitas</h3>
+
+    </div>
+    <div class="p-2"><a [routerLink]="['/recipe-new']" class="btn btn-primary float-end">Nova
+            Receita</a></div>
+</div>
+<hr>
+<div class="row col-md-10 mx-auto">
+
+    <div class="card mb-3" *ngFor="let recipe of recipes; let i = index">
+        <div class="row g-0">
+            <div class="col-md-2">
+                <img src="https://cdn-icons-png.flaticon.com/512/985/985478.png" class="img-fluid rounded-start p-2"
+                    alt="..." style="width: 150px; height: auto;">
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">{{recipe.name}}</h5>
+
+                    <p class="card-text">
+                        Avaliação:
+                        <ngb-rating [(rate)]="recipe.rating" [max]="5" class="text-warning"
+                            (rateChange)="updateRating(recipe._id, $event)"></ngb-rating>
+
+                    </p>
+                    <p class="card-text">{{recipe.descriptions}}</p>
+                    <p class="card-text"><small class="text-body-secondary">Tempo de preparo: {{recipe.time}}
+                            (min)</small>
+                    </p>
+                    <p class="d-inline-flex gap-1">
+                        <a class="btn btn-primary float-end" [routerLink]="['/recipe-edit', recipe._id]">Editar</a>
+                        <a class="btn btn-light" data-bs-toggle="collapse" href="#collapseExample{{i}}" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Preparo
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample{{i}}">
+                        <div class="card card-body p-1">
+                            <h5 class="badge text-bg-light p-2">Ingredientes</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" *ngFor="let recipeIngredient of recipe.ingredients">
+                                    Ingrediente: <b>{{ recipeIngredient.ingredient.name }}</b> <br>
+                                    Compatibilidade: <b>{{ recipeIngredient.compatibility }}%</b> <br>
+                                    Quantidade: <b>{{ recipeIngredient.quantity }} {{ recipeIngredient.unity }}</b>
+                                </li>
+                            </ul>
+
+                            <h5 class="badge text-bg-light p-2">Modo de Preparo</h5>
+                            <ol class="list-group list-group-numbered list-group-flush"
+                                *ngFor="let recipeMethod of recipe.method">
+                                <li class="list-group-item">{{recipeMethod.stepDescription}}</li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center mb-3">
+    <button *ngIf="currentPage <= totalPages && !loading" (click)="loadRecipes()" class="btn btn-outline-primary mt-3">
+        Carregar Mais
+    </button>
+
+    <div *ngIf="loading" class="loading-spinner">
+        Carregando mais receitas...
+    </div>
+</div>
+
+<!-- <app-ingredients-new (onSuccess)="ingredientInsertService.onInsertSuccess($event)"
+    (onError)="ingredientInsertService.onInsertError($event)"></app-ingredients-new>
+<app-ingredients-edit [ingredientId]="ingredientId" (onSuccess)="ingredientEditService.onEditSuccess($event)"
+    (onError)="ingredientEditService.onEditError($event)"></app-ingredients-edit> -->

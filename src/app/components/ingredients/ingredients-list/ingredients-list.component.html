@@ -1,0 +1,37 @@
+<div class="d-flex">
+    <div class="p-2 flex-grow-1">
+        <h3>Ingredientes</h3>
+
+    </div>
+    <div class="p-2"><button (click)="ingredientInsertService.showModalInsert()" class="btn btn-primary float-end">Novo
+            Ingrediente</button></div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="list-group mb-2 list-group-checkable d-grid gap-2 border-0" *ngFor="let ingredient of ingredients">
+            <label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios1">
+                {{ingredient.name}}
+                <span class="float-end">
+                    <a href="javascript:void(0)" (click)="ingredientEditService.showModalEdit(ingredient._id)"
+                        class="btn btn-primary me-1">Editar</a>
+                </span>
+            </label>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center mb-3">
+    <button *ngIf="currentPage <= totalPages && !loading" (click)="loadIngredients()"
+        class="btn btn-outline-primary mt-3">
+        Carregar Mais
+    </button>
+
+    <div *ngIf="loading" class="loading-spinner">
+        Carregando mais ingredientes...
+    </div>
+</div>
+
+<app-ingredients-new (onSuccess)="ingredientInsertService.onInsertSuccess($event)"
+    (onError)="ingredientInsertService.onInsertError($event)"></app-ingredients-new>
+<app-ingredients-edit [ingredientId]="ingredientId" (onSuccess)="ingredientEditService.onEditSuccess(ingredientId)"
+    (onError)="ingredientEditService.onEditError($event)"></app-ingredients-edit>
