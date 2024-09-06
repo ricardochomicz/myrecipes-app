@@ -1,27 +1,45 @@
-# RecipesApp
+# MyRecipes App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.15.
+![MyRecipes App](https://img.shields.io/badge/version-1.0.0-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## Development server
+## Descrição
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+**MyRecipes App** é uma aplicação web desenvolvida para gerenciar receitas e ingredientes. Com esta aplicação, você pode criar, editar e listar receitas e ingredientes, bem como visualizar receitas que correspondem aos ingredientes fornecidos.
 
-## Code scaffolding
+## Tecnologias Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Frontend**: Angular
 
-## Build
+## Funcionalidades
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Gerenciamento de Ingredientes**
+  - Adicionar novos ingredientes
+  - Editar ingredientes existentes
+  - Listar todos os ingredientes
 
-## Running unit tests
+- **Gerenciamento de Receitas**
+  - Adicionar novas receitas
+  - Editar receitas existentes
+  - Listar todas as receitas
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Compatibilidade de Ingredientes**
+  - Listar receitas que incluem ou quase incluem os ingredientes fornecidos
 
-## Running end-to-end tests
+## Instalação
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Requisitos
 
-## Further help
+- [Angular CLI](https://angular.io/cli)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Clonar o Repositório
+
+```bash
+git clone https://github.com/ricardochomicz/myrecipes-app.git
+cd myrecipes-app
+```
+
+### Instalar dependências
+
+```bash
+npm install
+```
