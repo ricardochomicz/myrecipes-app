@@ -8,7 +8,7 @@ import { Ingredient } from "../../models";
 })
 export class IngredientsService {
 
-  private apiUrl = 'http://localhost:5000/api/ingredients';
+  private apiUrl = 'https://myrecipes-api.onrender.com/api/ingredients';
 
   constructor(private http: HttpClient) { }
 

@@ -8,7 +8,7 @@ import { Recipe } from '../../models';
 })
 export class RecipesService {
 
-    private apiUrl = 'http://localhost:5000/api/recipes';
+    private apiUrl = 'https://myrecipes-api.onrender.com/api/recipes';
 
     constructor(private http: HttpClient) { }
 

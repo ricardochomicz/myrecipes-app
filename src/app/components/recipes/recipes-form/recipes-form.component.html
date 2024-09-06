@@ -86,5 +86,5 @@
         </div>
     </div>
     <hr>
-    <button type="submit" class="btn btn-success float-end">Salvar Receita</button>
+    <button type="submit" class="btn btn-success float-end" [disabled]="!recipeForm.valid">Salvar Receita</button>
 </form>

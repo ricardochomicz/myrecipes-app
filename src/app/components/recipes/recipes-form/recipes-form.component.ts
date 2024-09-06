@@ -50,8 +50,6 @@ export class RecipesFormComponent {
         });
     }
 
-
-
     ngOnInit() {
         if (this.recipeId) {
             this.loadRecipe(this.recipeId);
@@ -141,13 +139,6 @@ export class RecipesFormComponent {
             )
         );
 
-    // onFileSelected(event: any): void {
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         this.selectedFile = file;
-    //     }
-    // }
-
     onSubmit() {
         if (this.recipeForm.valid) {
             if (this.recipeId) {
@@ -170,22 +161,4 @@ export class RecipesFormComponent {
         }
     }
 
-    // onSubmit(): void {
-    //     if (this.selectedFile) {
-    //         const formData = new FormData();
-
-    //         // Adiciona a imagem ao FormData
-    //         formData.append('image', this.selectedFile, this.selectedFile.name);
-
-    //         // Adiciona outros campos do formulário
-    //         formData.append('name', this.fb.get('name').value);
-    //         formData.append('descriptions', this.fb.get('descriptions').value);
-    //         formData.append('time', this.fb.get('time').value);
-
-    //         // Agora você pode enviar `formData` para o backend
-    //         this.recipesService.uploadRecipe(formData).subscribe(response => {
-    //             console.log('Receita salva com sucesso:', response);
-    //         });
-    //     }
-    // }
 }
