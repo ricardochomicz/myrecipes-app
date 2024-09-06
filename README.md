@@ -43,3 +43,20 @@ cd myrecipes-app
 ```bash
 npm install
 ```
+
+### Carregar imagem docker (local)
+```bash
+docker load -i recipes-app.tar
+```
+
+### Rodar container na porta 8080
+```bash
+docker run -d -p 8080:80 recipes-app
+```
+
+### Link imagem
+https://drive.google.com/file/d/1O3SbmkHDGsnosdc2zFf_wEvKxoA9p8VW/view?usp=sharing
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
