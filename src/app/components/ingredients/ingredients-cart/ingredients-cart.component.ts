@@ -60,12 +60,17 @@ export class IngredientsCartComponent {
 
         this.recipesService.searchByIngredients(ingredients).subscribe(
             (compatibleRecipes) => {
-                if (compatibleRecipes) {
-                    this.foundRecipes = compatibleRecipes;
-                    console.log('Receitas compatíveis encontradas:', compatibleRecipes);
+
+                if (compatibleRecipes.length === 0) {
+                    // Se não encontrar receitas, exiba uma mensagem
+                    this.toastr.warning('Nenhuma receita encontrada com os ingredientes informados')
+                    this.foundRecipes = [];
                 } else {
-                    this.toastr.error('Nenhuma receita encontrada com o(s) ingrediente(s) informado(s)!')
+                    // Se encontrar receitas, armazene e exiba-as
+
+                    this.foundRecipes = compatibleRecipes;
                 }
+
 
             },
             (error) => {
