@@ -3,7 +3,12 @@
     <div class="row">
         <div class="form-group col-sm-8 mb-2">
             <label for="name">Nome</label>
-            <input id="name" formControlName="name" class="form-control" />
+            <input id="name" formControlName="name" name="name" class="form-control"
+                [ngClass]="{'is-invalid': recipeForm.controls['name'].invalid && recipeForm.controls['name'].dirty}" />
+            <div *ngIf="recipeForm.controls['name'].invalid && (recipeForm.controls['name'].dirty || recipeForm.controls['name'].touched)"
+                class="invalid-feedback">
+                <div *ngIf="recipeForm.controls['name'].errors?.['required']">Informe um nome</div>
+            </div>
         </div>
         <div class="form-group col-sm-4">
             <label for="time">Tempo de preparo (min)</label>
@@ -18,12 +23,12 @@
             <input id="descriptions" formControlName="descriptions" class="form-control" />
         </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="form-group col-sm-6 mb-2">
             <label for="image">Image URL</label>
             <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" accept="image/*">
         </div>
-    </div>
+    </div> -->
 
 
 
@@ -68,7 +73,11 @@
                 </div>
                 <div class="form-group col-sm-2">
                     <label for="unity">Unidade</label>
-                    <input id="unity" formControlName="unity" class="form-control" />
+                    <!-- <input id="unity" formControlName="unity" class="form-control" /> -->
+                    <select id="unity" formControlName="unity" class="form-control">
+                        <option value="" disabled>Selecione</option>
+                        <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+                    </select>
                 </div>
                 <div class="form-group col-sm-2 mt-4">
                     <button type="button" class="btn btn-danger" (click)="removeIngredient(i)">Remover</button>

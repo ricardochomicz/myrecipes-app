@@ -1,8 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RecipesService } from '../../../services/http/recipes.service';
 import { debounceTime, distinctUntilChanged, map, Observable, of, OperatorFunction, switchMap } from 'rxjs';
 import { IngredientsService } from '../../../services/http/ingredients.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -12,22 +16,29 @@ import { IngredientsService } from '../../../services/http/ingredients.service';
 })
 export class RecipesFormComponent {
 
+    units: string[] = ['Xícara', 'Colher', 'Kg', 'Grama', 'Litro', 'Mililitro', 'Unidade'];
+
     @Input()
     recipeForm!: FormGroup;
 
+    @Input()
+    recipeId?: number;
+
+    @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>()
+
     formatIngredientInput = (ingredient: any) => ingredient.name || '';  // Mostra o nome do ingrediente no input
 
-    formatIngredientResult = (ingredient: any) => ingredient.name;
+    formatIngredientResult = (ingredient: any) => ingredient.name; // Mostra o nome do ingrediente nas sugestões
 
     selectedFile: File | null = null;
 
     constructor(private fb: FormBuilder,
         private recipesService: RecipesService,
-        private ingredientsService: IngredientsService) { }
-
-
-
-    ngOnInit() {
+        private ingredientsService: IngredientsService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private toastr: ToastrService) {
         this.recipeForm = this.fb.group({
             name: ['', Validators.required],
             descriptions: ['', Validators.required],
@@ -36,6 +47,48 @@ export class RecipesFormComponent {
             method: this.fb.array([]),
             rating: [''],
             ingredients: this.fb.array([]),
+        });
+    }
+
+
+
+    ngOnInit() {
+        if (this.recipeId) {
+            this.loadRecipe(this.recipeId);
+        }
+    }
+
+    loadRecipe(id: number): void {
+        this.recipesService.get(id).subscribe(recipe => {
+            this.recipeForm.patchValue({
+                name: recipe.name,
+                descriptions: recipe.descriptions,
+                image: recipe.image,
+                time: recipe.time,
+                rating: recipe.rating
+            });
+
+            // Limpa FormArray existente
+            this.method.clear();
+            this.ingredients.clear();
+
+            // Adiciona novas etapas
+            recipe.method.forEach(step => {
+                this.method.push(this.fb.group({
+                    stepNumber: [step.stepNumber, Validators.required],
+                    stepDescription: [step.stepDescription, Validators.required]
+                }));
+            });
+
+            // Adiciona novos FormGroups para ingredientes
+            recipe.ingredients.forEach(ingredient => {
+                this.ingredients.push(this.fb.group({
+                    ingredient: [ingredient.ingredient, Validators.required],
+                    compatibility: [ingredient.compatibility, Validators.required],
+                    quantity: [ingredient.quantity, Validators.required],
+                    unity: [ingredient.unity, Validators.required]
+                }));
+            });
         });
     }
 
@@ -88,18 +141,32 @@ export class RecipesFormComponent {
             )
         );
 
-    onFileSelected(event: any): void {
-        const file = event.target.files[0];
-        if (file) {
-            this.selectedFile = file;
-        }
-    }
+    // onFileSelected(event: any): void {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         this.selectedFile = file;
+    //     }
+    // }
 
     onSubmit() {
         if (this.recipeForm.valid) {
-            this.recipesService.create(this.recipeForm.value).subscribe(response => {
-                console.log('Receita criada com sucesso.', response);
-            });
+            if (this.recipeId) {
+                this.recipesService.update(this.recipeId, this.recipeForm.value).subscribe({
+                    next: (recipe) => {
+                        this.toastr.success('Receita atualizada com sucesso!')
+                        this.router.navigate(['/recipes']);
+                    },
+                    error: (err) => {
+                        console.log(err)
+                    }
+                })
+
+            } else {
+                this.recipesService.create(this.recipeForm.value).subscribe(() => {
+                    this.toastr.success('Receita cadastrada com sucesso!')
+                    this.router.navigate(['/recipes']);
+                });
+            }
         }
     }
 

@@ -1,0 +1,34 @@
+<div class="card mt-5">
+    <div class="card-header">
+        <h4 class="mt-1">Receita - {{recipe?.name}}</h4>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-4">
+                <p>Tempo de preparo: {{recipe?.time}} (min)</p>
+                <p>Descrição: {{recipe?.descriptions}}</p>
+                <img src="https://cdn-icons-png.flaticon.com/512/985/985478.png" class="img-fluid rounded-start p-2"
+                    alt="..." style="width: 150px; height: auto;">
+            </div>
+            <div class="col-8">
+                <h5 class="badge text-bg-light p-2 d-block">Ingredientes</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let recipeIngredient of recipe.ingredients">
+                        Ingrediente: <b>{{ recipeIngredient.ingredient.name }}</b> <br>
+                        Quantidade: <b>{{
+                            recipeIngredient.quantity }} {{ recipeIngredient.unity }}</b>
+
+                    </li>
+                </ul>
+                <h5 class="badge text-bg-light p-2 d-block mt-5">Método de Preparo</h5>
+                <ol class="list-group list-group-flush" *ngFor="let recipeMethod of recipe.method">
+                    <li class="list-group-item"><span
+                            class="badge rounded-pill text-bg-light">{{recipeMethod.stepNumber}}</span> -
+                        {{recipeMethod.stepDescription}}</li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

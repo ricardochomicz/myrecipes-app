@@ -20,6 +20,8 @@ import { RecipesNewComponent } from './components/recipes/recipes-new/recipes-ne
 import { RecipesEditComponent } from './components/recipes/recipes-edit/recipes-edit.component';
 import { RecipesFormComponent } from './components/recipes/recipes-form/recipes-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RecipesShowComponent } from './components/recipes/recipes-show/recipes-show.component';
+import { IngredientsCartComponent } from './components/ingredients/ingredients-cart/ingredients-cart.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RecipesListComponent,
     RecipesNewComponent,
     RecipesEditComponent,
-    RecipesFormComponent
+    RecipesFormComponent,
+    RecipesShowComponent,
+    IngredientsCartComponent
   ],
   imports: [
     BrowserModule,

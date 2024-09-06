@@ -21,7 +21,7 @@
 
                     <p class="card-text">
                         Avaliação:
-                        <ngb-rating [(rate)]="recipe.rating" [max]="5" class="text-warning"
+                        <ngb-rating [(rate)]="recipe.rating" [max]="5" class="text-warning h5"
                             (rateChange)="updateRating(recipe._id, $event)"></ngb-rating>
 
                     </p>
@@ -48,9 +48,10 @@
                             </ul>
 
                             <h5 class="badge text-bg-light p-2">Modo de Preparo</h5>
-                            <ol class="list-group list-group-numbered list-group-flush"
-                                *ngFor="let recipeMethod of recipe.method">
-                                <li class="list-group-item">{{recipeMethod.stepDescription}}</li>
+                            <ol class="list-group list-group-flush" *ngFor="let recipeMethod of recipe.method">
+                                <li class="list-group-item"><span
+                                        class="badge rounded-pill text-bg-light">{{recipeMethod.stepNumber}}</span> -
+                                    {{recipeMethod.stepDescription}}</li>
 
                             </ol>
                         </div>

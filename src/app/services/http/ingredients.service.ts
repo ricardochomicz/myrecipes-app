@@ -29,7 +29,7 @@ export class IngredientsService {
 
   searchIngredients(term: string): Observable<any[]> {
     return this.http.get<any>(`${this.apiUrl}?search=${term}`).pipe(
-      map(response => response.data)  // Supondo que a resposta seja um objeto com uma propriedade `data` que contém o array
+      map(response => response.data)
     );
   }
 

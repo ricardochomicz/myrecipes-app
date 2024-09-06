@@ -1,0 +1,72 @@
+<form [formGroup]="recipeForm" class="mt-5">
+    <div formArrayName="ingredients">
+        <button type="button" class="btn btn-primary mb-2" (click)="addIngredient()">Adicionar Ingrediente</button>
+        <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label for="ingredient">Ingrediente</label>
+                    <input id="ingredient" formControlName="ingredient" class="form-control"
+                        [ngbTypeahead]="searchIngredients" [inputFormatter]="formatIngredientInput"
+                        [resultFormatter]="formatIngredientResult" [selectOnExact]="true" />
+                </div>
+
+
+
+                <div class="form-group col-sm-2 mt-4">
+                    <button type="button" class="btn btn-danger" (click)="removeIngredient(i)">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão para buscar receitas -->
+    <button type="button" class="btn btn-success mt-3" (click)="searchRecipes()">Buscar Receitas Compatíveis</button>
+</form>
+
+<!-- Lista de receitas encontradas -->
+<div *ngIf="foundRecipes.length > 0" class="mt-5">
+    <h3>Receitas Compatíveis:</h3>
+    <div class="card mb-3" *ngFor="let recipe of foundRecipes; let i = index">
+        <div class="row g-0">
+            <div class="col-md-2">
+                <img src="https://cdn-icons-png.flaticon.com/512/985/985478.png" class="img-fluid rounded-start p-2"
+                    alt="..." style="width: 150px; height: auto;">
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.name }}</h5>
+
+                    <p class="card-text">{{ recipe.descriptions }}</p>
+                    <p class="card-text"><small class="text-body-secondary">Tempo de preparo: {{ recipe.time }}
+                            (min)</small></p>
+                    <p class="card-text"><small class="text-body-secondary">Compatibilidade: {{ recipe.compatibility
+                            }}%</small></p>
+                    <a class="btn btn-light" data-bs-toggle="collapse" href="#collapseExample{{i}}" role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        Detalhes
+                    </a>
+                    <div class="collapse mt-4" id="collapseExample{{i}}">
+                        <div class="card card-body p-1">
+                            <h5 class="badge text-bg-light p-2">Ingredientes</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" *ngFor="let recipeIngredient of recipe.ingredients">
+                                    Ingrediente: <b>{{ recipeIngredient.ingredient.name }}</b> <br>
+                                    Compatibilidade: <b>{{ recipeIngredient.compatibility }}%</b> <br>
+                                    Quantidade: <b>{{ recipeIngredient.quantity }} {{ recipeIngredient.unity }}</b>
+                                </li>
+                            </ul>
+
+                            <h5 class="badge text-bg-light p-2">Modo de Preparo</h5>
+                            <ol class="list-group list-group-flush" *ngFor="let recipeMethod of recipe.method">
+                                <li class="list-group-item"><span
+                                        class="badge rounded-pill text-bg-light">{{recipeMethod.stepNumber}}</span> -
+                                    {{recipeMethod.stepDescription}}</li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

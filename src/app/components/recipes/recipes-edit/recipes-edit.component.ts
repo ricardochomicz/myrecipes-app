@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipes-edit',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class RecipesEditComponent {
 
+  recipeId?: any;
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.recipeId = this.route.snapshot.paramMap.get('id') || '';
+  }
 }

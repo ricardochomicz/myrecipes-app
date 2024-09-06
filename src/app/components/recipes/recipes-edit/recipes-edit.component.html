@@ -1,1 +1,6 @@
-<p>recipes-edit works!</p>
+<div class="card mt-5">
+    <div class="card-body">
+        <h5 class="card-title">Editar Receita</h5>
+        <app-recipes-form [recipeId]="recipeId" (onSuccess)="$event"></app-recipes-form>
+    </div>
+</div>
